@@ -51,6 +51,7 @@ const Deck = ({ dispatch, deck, navigation }) => {
 
   const handleAddCardToDeck = ({ question, answer }) => {
     dispatch(addCardToDeck({ deckId: deck.id, question, answer }));
+    toggleModal();
   };
 
   return (

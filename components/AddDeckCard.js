@@ -26,17 +26,24 @@ const TextInput = styled.TextInput`
   margin-vertical: 10px;
 `;
 
+const ButtonsContainer = styled.View`
+  justify-content: space-around;
+  height: 100px;
+`;
+
 const AddDeckCard = ({ modalVisible, onHideModal, onDeckCardSubmit }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const submit = () => {
     onDeckCardSubmit({ question, answer });
+    setQuestion("");
+    setAnswer("");
   };
   return (
     <Container>
       <Modal
         animationType="slide"
-        transparent={false}
+        transparent
         visible={modalVisible}
         onRequestClose={() => {
           onHideModal();
@@ -48,9 +55,17 @@ const AddDeckCard = ({ modalVisible, onHideModal, onDeckCardSubmit }) => {
           <TextInput
             onChangeText={(text) => setQuestion(text)}
             value={question}
+            placeholder="Question"
           />
-          <TextInput onChangeText={(text) => setAnswer(text)} value={answer} />
-          <Button onPress={submit} title="Add Card To Deck" />
+          <TextInput
+            onChangeText={(text) => setAnswer(text)}
+            value={answer}
+            placeholder="Answer"
+          />
+          <ButtonsContainer>
+            <Button onPress={submit} title="Add Card To Deck" />
+            <Button onPress={onHideModal} title="Cancel" color="red" />
+          </ButtonsContainer>
         </Card>
       </Modal>
     </Container>
