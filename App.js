@@ -1,32 +1,63 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Slider } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
 import styled from "styled-components/native";
 import DeckList from "./components/DeckList";
 import Deck from "./components/Deck";
+import AddDeck from "./components/AddDeck";
+import AddDeckCard from "./components/AddDeckCard";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./reducers";
+import { TouchableHighlight } from "react-native-gesture-handler";
+import { devToolsEnhancer } from "redux-devtools-extension";
 
-const MainView = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+const store = createStore(reducer, devToolsEnhancer());
+
+const HeaderButtonContainer = styled.View`
+  padding-right: 10px;
 `;
 
 const Stack = createStackNavigator();
 
-const App = () => {
-  const [val, setVal] = useState(20);
-
+const AddDeckLink = ({ navigation }) => {
   return (
-    <NavigationContainer>
-      <MainView>
-        <Stack.Navigator>
-          <Stack.Screen name="Deck List" component={DeckList} />
+    <TouchableHighlight>
+      <HeaderButtonContainer>
+        <Button
+          title="ADD DECK"
+          onPress={() => navigation.navigate("Add Deck")}
+        />
+      </HeaderButtonContainer>
+    </TouchableHighlight>
+  );
+};
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "tomato" },
+            headerTitleAlign: "center",
+          }}
+        >
+          <Stack.Screen
+            name="Deck List"
+            component={DeckList}
+            options={({ navigation }) => ({
+              headerRight: () => <AddDeckLink navigation={navigation} />,
+            })}
+          />
           <Stack.Screen name="Deck" component={Deck} />
+          <Stack.Screen name="Add Deck" component={AddDeck} />
+          <Stack.Screen name="Add Deck Card" component={AddDeckCard} />
         </Stack.Navigator>
-      </MainView>
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

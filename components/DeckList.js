@@ -1,20 +1,66 @@
-import React from "react";
-import { Text, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  Button,
+  ScrollView,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import styled from "styled-components/native";
+import { connect } from "react-redux";
+import DeckCard from "./DeckCard";
+import Constants from "expo-constants";
+import { getInitialDecks } from "../actions/decks";
 
-const StyledView = styled.View`
-  flex: 1;
-  align-items: center;
+const AddButtonContainer = styled.View`
+  margin-top: 20px;
   justify-content: center;
+  flex-direction: row;
 `;
 
-const DeckList = ({ navigation }) => {
+const DeckList = ({ dispatch, navigation, decks }) => {
+  const [initiated, setInitiated] = useState(false);
+
+  useEffect(() => {
+    dispatch(getInitialDecks());
+  }, []);
+
   return (
-    <StyledView>
-      <Text>Deck List</Text>
-      <Button title="see deck" onPress={() => navigation.navigate("Deck")} />
-    </StyledView>
+    <SafeAreaView style={styles.container}>
+      <AddButtonContainer>
+        <Button
+          onPress={() => navigation.navigate("Add Deck")}
+          title="Add Deck"
+        />
+      </AddButtonContainer>
+      <FlatList
+        contentContainerStyle={styles.list}
+        data={decks}
+        renderItem={({ item }) => (
+          <DeckCard navigation={navigation} {...item} key={item.title} />
+        )}
+      />
+    </SafeAreaView>
   );
 };
 
-export default DeckList;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
+  },
+  list: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexGrow: 1,
+  },
+});
+
+const mapStateToProps = ({ decks }) => {
+  return {
+    decks,
+  };
+};
+
+export default connect(mapStateToProps)(DeckList);
