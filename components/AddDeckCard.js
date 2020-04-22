@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 
 const Container = styled.SafeAreaView`
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 `;
@@ -39,18 +40,19 @@ const AddDeckCard = ({ modalVisible, onHideModal, onDeckCardSubmit }) => {
     setQuestion("");
     setAnswer("");
   };
+  const disabled = answer.length < 3 || question.length < 3;
   return (
     <Container>
       <Modal
         animationType="slide"
-        transparent
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
           onHideModal();
         }}
         style={{ flex: 1 }}
       >
-        <Card elevation={5}>
+        <Card>
           <Title>Add Deck</Title>
           <TextInput
             onChangeText={(text) => setQuestion(text)}
@@ -63,7 +65,11 @@ const AddDeckCard = ({ modalVisible, onHideModal, onDeckCardSubmit }) => {
             placeholder="Answer"
           />
           <ButtonsContainer>
-            <Button onPress={submit} title="Add Card To Deck" />
+            <Button
+              onPress={submit}
+              title="Add Card To Deck"
+              disabled={disabled}
+            />
             <Button onPress={onHideModal} title="Cancel" color="red" />
           </ButtonsContainer>
         </Card>
