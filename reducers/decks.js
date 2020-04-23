@@ -12,9 +12,8 @@ export default function Decks(state = [], action) {
     case GET_INITIAL_DECKS:
       return action.decks;
     case ADD_DECK: {
-      const id = Math.floor(Math.random() * 90000) + 10000;
       const deck = {
-        id: id.toString(),
+        id: action.id,
         title: action.title,
         questions: [],
       };

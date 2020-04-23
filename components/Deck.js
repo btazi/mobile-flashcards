@@ -38,11 +38,11 @@ const ButtonsContainer = styled.View`
 `;
 
 const Deck = ({ dispatch, deck, navigation }) => {
-  const numberOfCards = deck.questions.length;
-  const [modalVisible, setModalVisible] = useState(true);
+  const numberOfCards = typeof deck == "object" ? deck.questions.length : null;
+  const [modalVisible, setModalVisible] = useState(false);
   const handleDeleteDeck = () => {
-    dispatch(deleteDeck(deck.id));
     navigation.navigate("Deck List");
+    dispatch(deleteDeck(deck.id));
   };
 
   const toggleModal = () => {
@@ -56,20 +56,37 @@ const Deck = ({ dispatch, deck, navigation }) => {
 
   return (
     <Container>
-      <Card elevation={5}>
-        <Title>{deck.title}</Title>
-        <Details>Number of cards: {numberOfCards}</Details>
-        <ButtonsContainer>
-          <Button title="Start Quizz" />
-          <Button title="Add Card" onPress={toggleModal} />
-          <Button title="Delete Quizz" color="red" onPress={handleDeleteDeck} />
-        </ButtonsContainer>
-      </Card>
-      <AddDeckCard
-        modalVisible={modalVisible}
-        onHideModal={toggleModal}
-        onDeckCardSubmit={handleAddCardToDeck}
-      />
+      {deck && (
+        <>
+          <Card elevation={5}>
+            <Title>{deck.title}</Title>
+            <Details>Number of cards: {numberOfCards}</Details>
+            <ButtonsContainer>
+              <Button
+                title="Start Quizz"
+                onPress={() =>
+                  navigation.navigate("Quizz", {
+                    questions: deck.questions,
+                    title: deck.title,
+                    id: deck.id,
+                  })
+                }
+              />
+              <Button title="Add Card" onPress={toggleModal} />
+              <Button
+                title="Delete Quizz"
+                color="red"
+                onPress={handleDeleteDeck}
+              />
+            </ButtonsContainer>
+          </Card>
+          <AddDeckCard
+            modalVisible={modalVisible}
+            onHideModal={toggleModal}
+            onDeckCardSubmit={handleAddCardToDeck}
+          />
+        </>
+      )}
     </Container>
   );
 };

@@ -13,10 +13,11 @@ export function getInitialDecks() {
   };
 }
 
-export function addDeck(title) {
+export function addDeck({ id, title }) {
   return {
     type: ADD_DECK,
     title,
+    id,
   };
 }
 

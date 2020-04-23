@@ -5,6 +5,7 @@ import DeckList from "./components/DeckList";
 import Deck from "./components/Deck";
 import AddDeck from "./components/AddDeck";
 import AddDeckCard from "./components/AddDeckCard";
+import Quizz from "./components/Quizz";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createStore } from "redux";
@@ -55,6 +56,7 @@ const App = () => {
           <Stack.Screen name="Deck" component={Deck} />
           <Stack.Screen name="Add Deck" component={AddDeck} />
           <Stack.Screen name="Add Deck Card" component={AddDeckCard} />
+          <Stack.Screen name="Quizz" component={Quizz} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -32,9 +32,10 @@ const TitleInput = styled.TextInput`
 const AddDeck = ({ navigation, dispatch }) => {
   const [title, setTitle] = useState("");
   const submit = () => {
-    dispatch(addDeck(title));
+    const id = (Math.floor(Math.random() * 90000) + 10000).toString(); // generate a random 5 digit id
+    dispatch(addDeck({ id, title }));
     setTitle("");
-    navigation.navigate("Deck List");
+    navigation.navigate("Deck", { id });
   };
   const disabled = title.length < 3;
   return (
@@ -44,8 +45,9 @@ const AddDeck = ({ navigation, dispatch }) => {
         <TitleInput
           onChangeText={(text) => setTitle(text)}
           value={title}
+          placeholder="Title..."
         ></TitleInput>
-        <Button onPress={submit} title="Add Deck" disabled={disabled} />
+        <Button onPress={submit} title="Create Deck" disabled={disabled} />
       </Card>
     </Container>
   );
