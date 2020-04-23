@@ -16,5 +16,41 @@ export function initialDecks() {
         },
       ],
     },
+    {
+      id: "92411",
+      title: "Geography",
+      questions: [
+        {
+          question: "Does the equator run through Indonesia ?",
+          answer: "True",
+        },
+        {
+          question: "Is Boe the capital of Zimbabwe ?",
+          answer:
+            "False, Boe was the capital of Guinea-Bisseau and was replaced by Guinea",
+        },
+        {
+          question:
+            "What is the highest mountain in New Zealand? Mt Ruapehu, Mt Taranaki or Mt Cook ?",
+          answer: "Mt Cook",
+        },
+      ],
+    },
+    {
+      id: "63893",
+      title: "Science",
+      questions: [
+        {
+          question:
+            "What did Marie Curie discover radium inside ? sand, Iron or Pitchblende ?",
+          answer: "Pitchblende",
+        },
+        {
+          quertion:
+            "Terrestrial relates to? Things related to space OR things related to land or Earth ?",
+          answer: "Things related to land or Earth",
+        },
+      ],
+    },
   ];
 }
