@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, SafeAreaView, Button } from "react-native";
 import styled from "styled-components/native";
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from "../utils/notification";
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -82,6 +86,11 @@ const Question = ({
 };
 
 const Score = ({ score, totalQuestions, onRestartQuizz, onReturnToDeck }) => {
+  // remove notification for today after quizz completed
+  useEffect(() => {
+    clearLocalNotification().then(setLocalNotification);
+  }, []);
+
   return (
     <Card elevation={4}>
       <Details>Score: {score} correct answers</Details>

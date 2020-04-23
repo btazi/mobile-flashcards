@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
 import styled from "styled-components/native";
 import DeckList from "./components/DeckList";
@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import reducer from "./reducers";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { devToolsEnhancer } from "redux-devtools-extension";
+import { setLocalNotification } from "./utils/notification";
 
 const store = createStore(reducer, devToolsEnhancer());
 
@@ -36,6 +37,10 @@ const AddDeckLink = ({ navigation }) => {
 };
 
 const App = () => {
+  useEffect(() => {
+    setLocalNotification();
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
