@@ -39,6 +39,7 @@ const ButtonsContainer = styled.View`
 
 const Deck = ({ dispatch, deck, navigation }) => {
   const numberOfCards = typeof deck == "object" ? deck.questions.length : null;
+  const quizzDisabled = numberOfCards === 0;
   const [modalVisible, setModalVisible] = useState(false);
   const handleDeleteDeck = () => {
     navigation.navigate("Deck List");
@@ -71,6 +72,7 @@ const Deck = ({ dispatch, deck, navigation }) => {
                     id: deck.id,
                   })
                 }
+                disabled={quizzDisabled}
               />
               <Button title="Add Card" onPress={toggleModal} />
               <Button
